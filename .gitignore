@@ -1,1 +1,21 @@
+# node modules
+node_modules/
+
+# production build
+build/
+
+# log files
+*.log
+
+# environment variables
+.env
+
+# system files
+.DS_Store
+
+# vscode settings
+.vscode/
+
+# nested git repo
 detection/
+
