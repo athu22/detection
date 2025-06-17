@@ -19,12 +19,11 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'surya'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
 # Model saved with Keras model.save()
-MODEL_PATH = "E://bsury//Summer Vacation//Smart_Project//WebsiteDR//Login//flaskreact//models_//pretrained//pretrained//model.h5"
-#E://bsury//Summer Vacation//Smart_Project//WebsiteDR//Login//flaskreact//models_//pretrained//pretrained//model.h5
-
-# Loading trained model
+# ...existing code...
+MODEL_PATH = "models_/pretrained/pretrained/model.h5"
 model = build_model()
 model.load_weights(MODEL_PATH)
+# ...existing code...
 print('Model loaded. Start serving...')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ECHO = True
@@ -169,5 +168,5 @@ def predict():
  
 if __name__ == "__main__":
     #app.run(debug=True)
-    http_server = WSGIServer(('0.0.0.0', 5000), app)
+    http_server = WSGIServer(('0.0.0.0', 5001), app)
     http_server.serve_forever()

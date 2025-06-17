@@ -28,9 +28,9 @@ def build_model():
     Model weights are saved in file DenseNet-BC-121-32-no-top.h5
     """
     densenet = DenseNet121(
-        weights="E://bsury//Summer Vacation//Smart_Project//WebsiteDR//Login//flaskreact//models_//pretrained//pretrained//DenseNet-BC-121-32-no-top.h5",
-        include_top=False,
         input_shape=(224, 224, 3),
+        include_top=False,  # <-- Add this line
+        weights='imagenet' # <-- Add this line for clarity
     )
 
     """
@@ -43,12 +43,6 @@ def build_model():
     model.add(layers.Dropout(0.5))
     model.add(layers.Dense(5, activation="sigmoid"))
 
-
-    """
-    model parameters used in training:
-    optimizer : adam
-    learning rate : 10e-5
-    """
     model.compile(
         loss="binary_crossentropy", optimizer=Adam(learning_rate=0.001), metrics=["accuracy"]
     )
@@ -59,11 +53,11 @@ def build_model():
 Image are classified into 5 categories based on severity using the pretrained model
 Return the maximum probability class for given image
 """
+# ...existing code...
 def classify_image(img):
-    # Build model used for classification
-    # Load weights from pretrained model
     model = build_model()
-    model.load_weights("E://bsury//Summer Vacation//Smart_Project//WebsiteDR//Login//flaskreact//models_//pretrained//pretrained//model.h5")
+    model.load_weights("models_/pretrained/pretrained/model.h5")
+    # ...existing code...
 
     # Create preprocessed image to be evaluated and predict its class
     x_val = np.empty((1, 224, 224, 3), dtype=np.uint8)

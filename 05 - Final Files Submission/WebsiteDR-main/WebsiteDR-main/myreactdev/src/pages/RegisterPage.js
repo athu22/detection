@@ -11,7 +11,7 @@ export default function RegisterPage(){
     const navigate = useNavigate();
      
     const registerUser = () => {
-        axios.post('http://127.0.0.1:5000/signup', {
+        axios.post('http://127.0.0.1:5001/signup', {
             email: email,
             password: password
         })
