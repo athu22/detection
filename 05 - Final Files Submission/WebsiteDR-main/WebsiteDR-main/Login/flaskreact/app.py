@@ -114,26 +114,32 @@ def login_user():
 @app.route("/predict", methods=['GET','POST'])
 def predict():
     if request.method == 'POST':
-        # Get the image from post request
-        # img = pybase64.b64decode((request.json))
-        img = base64_to_pil(request.json)
+        try:
+            # Get the image from post request
+            img_base64 = request.json
+            
+            # Convert base64 to PIL image
+            img = base64_to_pil(img_base64)
 
-        # Save the image to ./uploads
-        img.save('./uploads/image.jpeg')
+            # Save the image to ./uploads
+            img.save('./uploads/image.jpeg')
 
-        # Make prediction on the image
-        preds = model_predict(img, model)
+            # Make prediction on the image
+            preds = model_predict(img, model)
 
-        # Process result to find probability and class of prediction
-        pred_proba = "{:.3f}".format(np.amax(preds))    # Max probability
-        pred_class = np.argmax(np.squeeze(preds))
+            # Process result to find probability and class of prediction
+            pred_proba = "{:.3f}".format(np.amax(preds))    # Max probability
+            pred_class = np.argmax(np.squeeze(preds))
 
-        diagnosis = ["No DR", "Mild", "Moderate", "Severe", "Proliferative DR"]
+            diagnosis = ["No DR", "Mild", "Moderate", "Severe", "Proliferative DR"]
 
-        result = diagnosis[pred_class]               # Convert to string
-        
-        # Serialize the result
-        return jsonify(result=result, probability=pred_proba)
+            result = diagnosis[pred_class]               # Convert to string
+            
+            # Serialize the result
+            return jsonify(result=result, probability=pred_proba)
+        except Exception as e:
+            print(f"Error in predict: {str(e)}")
+            return jsonify({"error": str(e)}), 500
 
     return None
     # try:
